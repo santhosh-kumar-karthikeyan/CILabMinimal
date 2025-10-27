@@ -1,5 +1,7 @@
 # Computational Intelligence Laboratory - Minimal programs
 
+A compilation of python programs involving Computational Intelligence, that are minimal by lines of code at the same time maintaining readability
+
 ## Programs present
 
     - Breadth First Search
@@ -15,10 +17,10 @@
 
 - Python 3.x
 
-## Running the Algorithms
+## Running the programs
 
-Each algorithm is implemented in its own Python file with a sample graph for demonstration. To run any algorithm, execute the corresponding file using Python:
+Each algorithm is implemented in its own Python file with a dummy main function that too with enough data to run on its own. To run any program, execute the corresponding file using Python:
 
-```bash
+``` bash
     python filename.py
 ```
