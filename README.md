@@ -13,6 +13,11 @@ A compilation of python programs involving Computational Intelligence, that are 
     - Single Layer Perceptron ( To be implemented )
     - Ensemble Learning Classifier ( To be implemented )
 
+## Specifications
+
+    - `graph_main.py` contains a simple graph class sample on how to use the functions in a class ( only for unweighted graph).
+    - How to use : sample for weighted graph will be updated soon.
+
 ## Prerequisites
 
 - Python 3.x
