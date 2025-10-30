@@ -24,7 +24,7 @@ class KNN:
             return max(votes, key=votes.get) # key to override default key of comparison being the key of the dict `votes`
         else:
             labels = [label for _, label in neighbors] # get the labels of the neighbors and remove the distances
-            return mode(labels)
+            return mode(labels) # return the mode, the most common label
         
 if __name__ == "__main__":
     df = pd.read_csv('assets/knn_data.csv')
