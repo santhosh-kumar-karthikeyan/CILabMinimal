@@ -1,18 +1,19 @@
 import heapq
 
 def astar(graph, start, goal, heuristic):
-    pq, visited = [(heuristic[start], 0, start)], set()
+    pq, visited = [(heuristic[start], 0, start, [start])], set()
     while pq:
-        f, g, node = heapq.heappop(pq)
+        f, g, node, path = heapq.heappop(pq)
         if node not in visited:
             visited.add(node)
             print(node, end = ' ')
             if node == goal:
                 print(f"goal reached with cost {g}")
-                return
+                print(f"Actual Path: {' -> '.join(path)}")
+                return path
             for neigh , cost in graph[node].items():
                 if neigh not in visited:
-                    heapq.heappush(pq, (heuristic[neigh] + g + cost, g + cost, neigh))
+                    heapq.heappush(pq, (heuristic[neigh] + g + cost, g + cost, neigh, path+[neigh]))
 
 
 if __name__ == "__main__":
