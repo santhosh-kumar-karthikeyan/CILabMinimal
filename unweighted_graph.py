@@ -33,28 +33,34 @@ class Graph:
             self.graph[v].remove(u)
     
     def bfs(self, start, goal):
-        visited, q = set(), deque([start])
+        visited, q = set(), deque([(start, [start])])  # track path in queue
         while q:
-            node = q.popleft()
+            node, path = q.popleft()
             if node not in visited:
                 visited.add(node)
-                print(node, end=' ')
                 if node == goal:
-                    print(f"\n{goal} reached")
+                    print(f"Path: {' -> '.join(map(str, path))}")
+                    print(f"{goal} reached")
                     return
-                q.extend(n for n in self.graph[node] if n not in visited)
+                for n in self.graph[node]:
+                    if n not in visited:
+                        q.append((n, path + [n]))
     
-    def dfs(self, node, goal, visited=None):
+    def dfs(self, node, goal, visited=None, path=None):
         if visited is None:
             visited = set()
+        if path is None:
+            path = [node]
         if node not in visited:
             visited.add(node)
-            print(node, end=' ')
             if node == goal:
-                print(f"\n{goal} reached")
-                return
+                print(f"Path: {' -> '.join(map(str, path))}")
+                print(f"{goal} reached")
+                return True
             for neighbor in self.graph[node]:
-                self.dfs(neighbor, goal, visited)
+                if self.dfs(neighbor, goal, visited, path + [neighbor]):
+                    return True
+        return False
 
 if __name__ == "__main__":
     # create graph and add edges

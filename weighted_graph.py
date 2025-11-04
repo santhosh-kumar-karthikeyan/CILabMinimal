@@ -30,33 +30,33 @@ class WeightedGraph:
             self.graph[v].pop(u, None)
     
     def ucs(self, start, goal):
-        pq, visited = [(0, start)], set()
+        pq, visited = [(0, start, [start])], set()
         while pq:
-            cost, node = heapq.heappop(pq)
+            cost, node, path = heapq.heappop(pq)
             if node not in visited:
                 visited.add(node)
-                print(f"{node}:{cost}", end=' ')
                 if node == goal:
-                    print(f"\n{goal} reached with cost {cost}")
+                    print(f"Path: {' -> '.join(map(str, path))}")
+                    print(f"{goal} reached with cost {cost}")
                     return
                 for neighbor, weight in self.graph[node].items():
                     if neighbor not in visited:
-                        heapq.heappush(pq, (cost + weight, neighbor))
+                        heapq.heappush(pq, (cost + weight, neighbor, path + [neighbor]))
     
     def astar(self, start, goal, heuristic):
-        pq, visited = [(heuristic[start], 0, start)], set()
+        pq, visited = [(heuristic[start], 0, start, [start])], set() 
         while pq:
-            f, g, node = heapq.heappop(pq)
+            f, g, node, path = heapq.heappop(pq)
             if node not in visited:
                 visited.add(node)
-                print(node, end=' ')
                 if node == goal:
-                    print(f"\n{goal} reached with cost {g}")
+                    print(f"Path: {' -> '.join(map(str, path))}")
+                    print(f"{goal} reached with cost {g}")
                     return
                 for neighbor, weight in self.graph[node].items():
                     if neighbor not in visited:
                         h = heuristic[neighbor]
-                        heapq.heappush(pq, (h + g + weight, g + weight, neighbor))
+                        heapq.heappush(pq, (h + g + weight, g + weight, neighbor, path + [neighbor]))
 
 if __name__ == "__main__":
     # create weighted graph and add edges
