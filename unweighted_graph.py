@@ -33,44 +33,45 @@ class Graph:
             self.graph[v].remove(u)
     
     def bfs(self, start, goal):
-        visited, q = set(), deque([(start, [start])])  # track path in queue
+        visited, q = set(), deque([start])
         while q:
-            node, path = q.popleft()
+            node = q.popleft()
             if node not in visited:
                 visited.add(node)
+                print(node, end=' ')
                 if node == goal:
-                    print(f"Path: {' -> '.join(map(str, path))}")
-                    print(f"{goal} reached")
+                    print(f"\n{goal} reached")
                     return
-                for n in self.graph[node]:
-                    if n not in visited:
-                        q.append((n, path + [n]))
+                q.extend(n for n in self.graph[node] if n not in visited)
     
-    def dfs(self, node, goal, visited=None, path=None):
+    def dfs(self, node, goal, visited=None):
         if visited is None:
             visited = set()
-        if path is None:
-            path = [node]
         if node not in visited:
             visited.add(node)
+            print(node, end=' ')
             if node == goal:
-                print(f"Path: {' -> '.join(map(str, path))}")
-                print(f"{goal} reached")
-                return True
+                print(f"\n{goal} reached")
+                return
             for neighbor in self.graph[node]:
-                if self.dfs(neighbor, goal, visited, path + [neighbor]):
-                    return True
-        return False
+                self.dfs(neighbor, goal, visited)
 
 if __name__ == "__main__":
-    # create graph and add edges
-    g = Graph()
-    edges = [(0, 1), (0, 2), (1, 3), (2, 3)]
-    for u, v in edges:
-        g.add_edge(u, v)
-    
-    print("BFS from 0 to 3:")
-    g.bfs(0, 3)
-    
-    print("\nDFS from 0 to 3:")
-    g.dfs(0, 3)
+    graph_controller = Graph()
+    for node_i in range(1,7):
+        graph_controller.add_node(node_i) #Creates nodes 1 .. 6
+    # Following is the structure of the graph being constructed
+    #      1
+    #     / \
+    #    2   3
+    #   / \   \
+    #  4   5   6
+    # Idhelam varanjadhuku follow pannunga da 
+    graph_controller.add_edge(1,2)
+    graph_controller.add_edge(1,3)
+    graph_controller.add_edge(2,4)
+    graph_controller.add_edge(2,5)
+    graph_controller.add_edge(3,6)
+    graph_controller.bfs(5,4)
+
+    print(graph_controller.graph)
